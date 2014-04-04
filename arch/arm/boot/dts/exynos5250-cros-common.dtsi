@@ -34,6 +34,20 @@
 			samsung,pin-pud = <0>;
 			samsung,pin-drv = <0>;
 		};
+
+		wifi_en: wifi-en {
+			samsung,pins = "gpx0-1";
+			samsung,pin-function = <1>;
+			samsung,pin-pud = <0>;
+			samsung,pin-drv = <0>;
+		};
+
+		wifi_rst: wifi-rst {
+			samsung,pins = "gpx0-2";
+			samsung,pin-function = <1>;
+			samsung,pin-pud = <0>;
+			samsung,pin-drv = <0>;
+		};
 	};
 
 	i2c@12C60000 {
@@ -284,6 +298,9 @@
 		num-slots = <1>;
 		supports-highspeed;
 		broken-cd;
+		keep-power-in-suspend;
+		/* non-removable NOT set so mwifiex can use reset trick. */
+		fifo-depth = <0x80>;
 		card-detect-delay = <200>;
 		samsung,dw-mshc-ciu-div = <3>;
 		samsung,dw-mshc-sdr-timing = <2 3>;
@@ -304,6 +321,36 @@
 
 	hdmi {
 		hpd-gpio = <&gpx3 7 0>;
+	};
+
+	/* Chain regulators to ensure proper WiFi turn-on sequence. */
+	wifi_rst_regulator: wifi-rst-regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "wifi-rst-l";
+		gpio = <&gpx0 2 0>;
+		enable-active-high;
+		startup-delay-us = <1500>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&wifi_rst>;
+
+		/*
+		 * Technically, we should have a VIN-supply of the 32K clock, but that
+		 * causes a deferred probe of this regulator, despite the fact that we
+		 * don't have to enable it until much later. Skip the dependency, since
+		 * we do know that the 32K clock will always be kept on from early boot.
+		 *
+		 * vin-supply = <&en32khz_cp>;
+		 */
+	};
+
+	wifi_en_regulator: wifi-en-regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "wifi-en";
+		gpio = <&gpx0 1 0>;
+		enable-active-high;
+		pinctrl-names = "default";
+		pinctrl-0 = <&wifi_en>;
+		vin-supply = <&wifi_rst_regulator>;
 	};
 
 	gpio-keys {

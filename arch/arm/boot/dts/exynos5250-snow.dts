@@ -190,10 +190,16 @@
 	 */
 	mmc@12230000 {
 		status = "okay";
-		slot@0 {
-			pinctrl-names = "default";
-			pinctrl-0 = <&sd3_clk &sd3_cmd &sd3_bus4>;
-		};
+		
+		/*
+		 * The current best way to guarantee that reset/enable and clocks are
+		 * available before we try to probe the WiFi card is through a chain of
+		 * regulators.
+		 */
+		vmmc-supply = <&wifi_en_regulator>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&sd3_clk &sd3_cmd &sd3_bus4>;
+		edge-triggered-interrupts;
 	};
 
 	usb@12110000 {
@@ -207,3 +213,4 @@
 		};
 	};
 };
+
