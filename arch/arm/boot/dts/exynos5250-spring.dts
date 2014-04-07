@@ -139,7 +139,7 @@
 					regulator-max-microvolt = <1000000>;
 					regulator-always-on;
 					/* Output ON/OFF controlled by PWRREQ */
-					op_mode = <3>;
+					op_mode = <1>;
 				};
 
 				s5m_ldo7_reg: LDO7 {
@@ -148,7 +148,7 @@
 					regulator-max-microvolt = <1100000>;
 					regulator-always-on;
 					/* Output ON/OFF controlled by PWRREQ */
-					op_mode = <3>;
+					op_mode = <1>;
 				};
 
 				s5m_ldo8_reg: LDO8 {
@@ -157,7 +157,7 @@
 					regulator-max-microvolt = <1000000>;
 					regulator-always-on;
 					/* Output ON/OFF controlled by PWRREQ */
-					op_mode = <3>;
+					op_mode = <1>;
 				};
 
 				s5m_ldo10_reg: LDO10 {
@@ -166,7 +166,7 @@
 					regulator-max-microvolt = <1800000>;
 					regulator-always-on;
 					/* Output ON/OFF controlled by PWRREQ */
-					op_mode = <3>;
+					op_mode = <1>;
 				};
 
 				s5m_ldo11_reg: LDO11 {
@@ -184,7 +184,7 @@
 					regulator-max-microvolt = <3000000>;
 					regulator-always-on;
 					/* Output ON/OFF controlled by PWRREQ */
-					op_mode = <3>;
+					op_mode = <1>;
 				};
 
 				s5m_ldo13_reg: LDO13 {
@@ -202,7 +202,7 @@
 					regulator-max-microvolt = <1800000>;
 					regulator-always-on;
 					/* Output ON/OFF controlled by PWRREQ */
-					op_mode = <3>;
+					op_mode = <1>;
 				};
 
 				s5m_ldo15_reg: LDO15 {
@@ -211,7 +211,7 @@
 					regulator-max-microvolt = <1000000>;
 					regulator-always-on;
 					/* Output ON/OFF controlled by PWRREQ */
-					op_mode = <3>;
+					op_mode = <1>;
 				};
 
 				s5m_ldo16_reg: LDO16 {
@@ -220,7 +220,7 @@
 					regulator-max-microvolt = <1800000>;
 					regulator-always-on;
 					/* Output ON/OFF controlled by PWRREQ */
-					op_mode = <3>;
+					op_mode = <1>;
 				};
 
 				s5m_ldo17_reg: LDO17 {
@@ -237,7 +237,7 @@
 					regulator-min-microvolt = <1200000>;
 					regulator-max-microvolt = <1200000>;
 					/* Output ON */
-					op_mode = <1>;
+					op_mode = <3>;
 				};
 
 				s5m_buck1_reg: BUCK1 {
@@ -247,7 +247,7 @@
 					regulator-always-on;
 					regulator-boot-on;
 					/* Output ON/OFF controlled by PWRREQ */
-					op_mode = <3>;
+					op_mode = <1>;
 				};
 
 				s5m_buck2_reg: BUCK2 {
@@ -257,7 +257,7 @@
 					regulator-always-on;
 					regulator-boot-on;
 					/* Output ON/OFF controlled by PWRREQ */
-					op_mode = <3>;
+					op_mode = <1>;
 				};
 
 				s5m_buck3_reg: BUCK3 {
@@ -267,7 +267,7 @@
 					regulator-always-on;
 					regulator-boot-on;
 					/* Output ON/OFF controlled by PWRREQ */
-					op_mode = <3>;
+					op_mode = <1>;
 				};
 
 				s5m_buck4_reg: BUCK4 {
@@ -276,7 +276,7 @@
 					regulator-max-microvolt = <1300000>;
 					regulator-boot-on;
 					/* Output ON/OFF controlled by PWRREQ */
-					op_mode = <3>;
+					op_mode = <1>;
 				};
 
 				s5m_buck5_reg: BUCK5 {
@@ -286,7 +286,7 @@
 					regulator-always-on;
 					regulator-boot-on;
 					/* Output ON */
-					op_mode = <1>;
+					op_mode = <3>;
 				};
 
 				s5m_buck6_reg: BUCK6 {
@@ -296,7 +296,7 @@
 					regulator-always-on;
 					regulator-boot-on;
 					/* Output OFF */
-					op_mode = <0>;
+					op_mode = <1>;
 				};
 
 				s5m_buck9_reg: BUCK9 {
@@ -307,130 +307,6 @@
 					regulator-boot-on;
 					/* Output ON/OFF controlled by PWRREQ */
 					op_mode = <3>;
-				};
-			};
-		};
-	};
-
-	i2c-arbitrator {
-		compatible = "i2c-arb-gpio-challenge";
-		#address-cells = <1>;
-		#size-cells = <0>;
-
-		i2c-parent = <&{/i2c@12CA0000}>;
-
-		our-claim-gpio = <&gpf0 3 1>;
-		their-claim-gpios = <&gpe0 4 1>;
-		slew-delay-us = <10>;
-		wait-retry-us = <3000>;
-		wait-free-us = <50000>;
-
-		/* Arbitrarily assign bus 20, since past Exynos. */
-		i2c_20: i2c@0 {
-			reg = <0>;
-			#address-cells = <1>;
-			#size-cells = <0>;
-
-			battery: sbs-battery@b {
-				compatible = "sbs,sbs-battery";
-				reg = <0xb>;
-				sbs,poll-retry-count = <1>;
-			};
-
-			ec: embedded-controller {
-				compatible = "google,cros-ec-i2c";
-				reg = <0x1e>;
-				interrupts = <6 0>;
-				interrupt-parent = <&gpx1>;
-				wakeup-source;
-
-				keyboard-controller {
-					compatible = "google,cros-ec-keyb";
-					keypad,num-rows = <8>;
-					keypad,num-columns = <13>;
-					google,needs-ghost-filter;
-					linux,keymap = <0x0001007d	/* L_META */
-							0x0002003b	/* F1 */
-							0x00030030	/* B */
-							0x00040044	/* F10 */
-							0x00060031	/* N */
-							0x0008000d	/* = */
-							0x000a0064	/* R_ALT */
-
-							0x01010001	/* ESC */
-							0x0102003e	/* F4 */
-							0x01030022	/* G */
-							0x01040041	/* F7 */
-							0x01060023	/* H */
-							0x01080028	/* ' */
-							0x01090043	/* F9 */
-							0x010b000e	/* BKSPACE */
-
-							0x0200001d	/* L_CTRL */
-							0x0201000f	/* TAB */
-							0x0202003d	/* F3 */
-							0x02030014	/* T */
-							0x02040040	/* F6 */
-							0x0205001b	/* ] */
-							0x02060015	/* Y */
-							0x02070056	/* 102ND */
-							0x0208001a	/* [ */
-							0x02090042	/* F8 */
-
-							0x03010029	/* GRAVE */
-							0x0302003c	/* F2 */
-							0x03030006	/* 5 */
-							0x0304003f	/* F5 */
-							0x03060007	/* 6 */
-							0x0308000c	/* - */
-							0x030b002b	/* \ */
-
-							0x04000061	/* R_CTRL */
-							0x0401001e	/* A */
-							0x04020020	/* D */
-							0x04030021	/* F */
-							0x0404001f	/* S */
-							0x04050025	/* K */
-							0x04060024	/* J */
-							0x04080027	/* ; */
-							0x04090026	/* L */
-							0x040a002b	/* \ */
-							0x040b001c	/* ENTER */
-
-							0x0501002c	/* Z */
-							0x0502002e	/* C */
-							0x0503002f	/* V */
-							0x0504002d	/* X */
-							0x05050033	/* , */
-							0x05060032	/* M */
-							0x0507002a	/* L_SHIFT */
-							0x05080035	/* / */
-							0x05090034	/* . */
-							0x050B0039	/* SPACE */
-
-							0x06010002	/* 1 */
-							0x06020004	/* 3 */
-							0x06030005	/* 4 */
-							0x06040003	/* 2 */
-							0x06050009	/* 8 */
-							0x06060008	/* 7 */
-							0x0608000b	/* 0 */
-							0x0609000a	/* 9 */
-							0x060a0038	/* L_ALT */
-							0x060b006c	/* DOWN */
-							0x060c006a	/* RIGHT */
-
-							0x07010010	/* Q */
-							0x07020012	/* E */
-							0x07030013	/* R */
-							0x07040011	/* W */
-							0x07050017	/* I */
-							0x07060016	/* U */
-							0x07070036	/* R_SHIFT */
-							0x07080019	/* P */
-							0x07090018	/* O */
-							0x070b0067	/* UP */
-							0x070c0069>;	/* LEFT */
 				};
 			};
 		};
