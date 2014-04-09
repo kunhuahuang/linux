@@ -25,6 +25,20 @@
 	};
 
 	pinctrl@11400000 {
+		backlight_pwm: backlight-pwm {
+			samsung,pins = "gpb2-0";
+			samsung,pin-function = <2>;
+			samsung,pin-pud = <0>;
+			samsung,pin-drv = <0>;
+		};
+
+		backlight_en: backlight-en {
+			samsung,pins = "gpx3-0";
+			samsung,pin-function = <1>;
+			samsung,pin-pud = <0>;
+			samsung,pin-drv = <0>;
+		};
+
 		sd3_clk: sd3-clk {
 			samsung,pin-drv = <0>;
 		};
@@ -206,11 +220,25 @@
 		samsung,vbus-gpio = <&gpx1 1 0>;
 	};
 
+	backlight {
+		compatible = "pwm-backlight";
+		pwms = <&pwm 0 1000000 0>;
+		brightness-levels = <350 700 1050 1400 1750 2100 2450 2800>;
+		default-brightness-level = <7>;
+		enable-gpios = <&gpx3 0 0>;
+		pinctrl-0 = <&backlight_pwm &backlight_en>;
+		pinctrl-names = "default";
+	};
+
 	fixed-rate-clocks {
 		xxti {
 			compatible = "samsung,clock-xxti";
 			clock-frequency = <24000000>;
 		};
 	};
+};
+
+&pwm {
+	status = "okay";
 };
 
