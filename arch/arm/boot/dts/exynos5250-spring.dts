@@ -56,6 +56,15 @@
 		};
 	};
 
+	pinctrl@13400000 {
+		hsic_reset: hsic-reset {
+			samsung,pins = "gpe1-0";
+			samsung,pin-function = <1>;
+			samsung,pin-pud = <0>;
+			samsung,pin-drv = <0>;
+		};
+	};
+
 	gpio-keys {
 		compatible = "gpio-keys";
 
@@ -83,6 +92,8 @@
 
 	usbphy@12130000 {
 		samsung,hsic-reset-gpio = <&gpe1 0 1>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&hsic_reset>;
 	};
 
 	i2c@12C60000 {
