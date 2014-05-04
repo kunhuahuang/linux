@@ -347,6 +347,9 @@
 
 	i2c@12C70000 {
 		trackpad {
+			status = "disabled";
+		};
+		trackpad-alt {
 			reg = <0x4b>;
 			compatible = "atmel,atmel_mxt_tp";
 			interrupts = <2 0>;
