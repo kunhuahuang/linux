@@ -99,6 +99,10 @@
 	i2c@12C60000 {
 		max77686@09 {
 			status = "disabled";
+
+			rtc {
+				reg = <0x6>;
+			};
 		};
 
 		s5m8767_pmic@66 {
