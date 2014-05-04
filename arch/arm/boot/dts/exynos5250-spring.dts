@@ -81,6 +81,10 @@
 		status = "okay";
 	};
 
+	usbphy@12130000 {
+		samsung,hsic-reset-gpio = <&gpe1 0 1>;
+	};
+
 	i2c@12C60000 {
 		max77686@09 {
 			status = "disabled";
