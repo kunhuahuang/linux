@@ -69,6 +69,18 @@
 		};
 	};
 
+	usb@12000000 {
+		status = "okay";
+	};
+
+	usb@12110000 {
+		status = "okay";
+	};
+
+	usb@12120000 {
+		status = "okay";
+	};
+
 	i2c@12C60000 {
 		max77686@09 {
 			status = "disabled";
