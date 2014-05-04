@@ -98,6 +98,8 @@
 
 	i2c@12C60000 {
 		max77686@09 {
+			#address-cells = <1>;
+			#size-cells = <0>;
 			status = "disabled";
 
 			rtc {
