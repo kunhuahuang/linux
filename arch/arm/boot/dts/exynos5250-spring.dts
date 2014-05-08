@@ -96,6 +96,20 @@
 		pinctrl-0 = <&hsic_reset>;
 	};
 
+	usb_hub_bus {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		// SMSC USB3503 connected in hardware only mode as a PHY
+		usb_hub {
+			compatible = "smsc,usb3503a";
+			reset-gpios = <&gpe1 0 1>;
+			pinctrl-0 = <&usb_hub_reset>;
+			pinctrl-names = "default";
+		};
+	};
+
 	i2c@12C60000 {
 		max77686@09 {
 			#address-cells = <1>;

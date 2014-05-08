@@ -706,6 +706,13 @@
 			samsung,pin-pud = <0>;
 			samsung,pin-drv = <0>;
 		};
+
+		usb_hub_reset: usb-hub-reset {
+			samsung,pins = "gpe1-0";
+			samsung,pin-functions = <1>;
+			samsung,pin-pud = <0>;
+			samsung,pin-drv = <0>;
+		};
 	};
 
 	pinctrl@10d10000 {
