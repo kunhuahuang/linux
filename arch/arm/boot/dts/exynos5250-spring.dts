@@ -17,7 +17,7 @@
 	compatible = "google,spring", "samsung,exynos5250", "samsung,exynos5";
 
 	rtc@101E0000 {
-		status = "okay";
+		status = "disabled";
 	};
 
 	pinctrl@11400000 {
