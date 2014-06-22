@@ -334,6 +334,22 @@
 	status = "okay";
 	samsung,i2c-sda-delay = <100>;
 	samsung,i2c-max-bus-freq = <378000>;
+
+	trackpad-bootloader {
+		compatible = "atmel,atmel_mxt_tp";
+		reg = <0x25>;
+		interrupt-parent = <&gpx1>;
+		interrupts = <2 0>;
+		wakeup-source;
+	};
+
+	trackpad-alt {
+		compatible = "atmel,atmel_mxt_tp";
+		reg = <0x4b>;
+		interrupt-parent = <&gpx1>;
+		interrupts = <2 0>;
+		wakeup-source;
+	};
 };
 
 /*
