@@ -27,6 +27,10 @@
 #include <asm/mach/arch.h>
 #include <asm/mach-types.h>
 
+void __init early_init_dt_add_memory_arch(u64 base, u64 size)
+{
+	arm_add_memory(base, size);
+}
 
 #ifdef CONFIG_SMP
 extern struct of_cpu_method __cpu_method_of_table[];
@@ -212,7 +216,7 @@ const struct machine_desc * __init setup_machine_fdt(unsigned int dt_phys)
 	mdesc_best = &__mach_desc_GENERIC_DT;
 #endif
 
-	if (!dt_phys || !early_init_dt_scan(phys_to_virt(dt_phys)))
+	if (!dt_phys || !early_init_dt_verify(phys_to_virt(dt_phys)))
 		return NULL;
 
 	mdesc = of_flat_dt_match_machine(mdesc_best, arch_get_next_mach);
@@ -236,6 +240,9 @@ const struct machine_desc * __init setup_machine_fdt(unsigned int dt_phys)
 
 		dump_machine_table(); /* does not return */
 	}
+
+	set_max_bank_limit(mdesc);
+	early_init_dt_scan_all();
 
 	/* Change machine number to match the mdesc we're using */
 	__machine_arch_type = mdesc->nr;

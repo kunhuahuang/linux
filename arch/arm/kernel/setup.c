@@ -629,9 +629,29 @@ void __init dump_machine_table(void)
 		/* can't use cpu_relax() here as it may require MMU setup */;
 }
 
+static unsigned int bank_cnt;
+static unsigned int max_cnt;
+
+void set_max_bank_limit(const struct machine_desc *mdesc)
+{
+	max_cnt = mdesc->bank_limit;
+}
+
 int __init arm_add_memory(u64 start, u64 size)
 {
 	u64 aligned_start;
+
+	/*
+	 * Some buggy bootloaders rely on the old meminfo behavior of not adding
+	 * more than n banks since anything past that may contain invalid data.
+	 */
+	if (bank_cnt >= max_cnt) {
+		pr_crit("Max banks too low, ignoring memory at 0x%08llx\n",
+			(long long)start);
+		return -EINVAL;
+	}
+
+	bank_cnt++;
 
 	/*
 	 * Ensure that start/size are aligned to a page boundary.

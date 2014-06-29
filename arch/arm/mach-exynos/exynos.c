@@ -321,4 +321,5 @@ DT_MACHINE_START(EXYNOS_DT, "SAMSUNG EXYNOS (Flattened Device Tree)")
 	.dt_compat	= exynos_dt_compat,
 	.restart	= exynos_restart,
 	.reserve	= exynos_reserve,
+	.bank_limit     = 8,
 MACHINE_END

@@ -204,6 +204,7 @@ setup_machine_tags(phys_addr_t __atags_pointer, unsigned int machine_nr)
 		dump_machine_table(); /* does not return */
 	}
 
+	set_max_bank_limit(mdesc);
 	if (__atags_pointer)
 		tags = phys_to_virt(__atags_pointer);
 	else if (mdesc->atag_offset)

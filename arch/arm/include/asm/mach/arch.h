@@ -40,6 +40,8 @@ struct machine_desc {
 	unsigned int		video_start;	/* start of video RAM	*/
 	unsigned int		video_end;	/* end of video RAM	*/
 
+	unsigned int		bank_limit;	/* maximum number of memory
+						 * banks to add */
 	unsigned char		reserve_lp0 :1;	/* never has lp0	*/
 	unsigned char		reserve_lp1 :1;	/* never has lp1	*/
 	unsigned char		reserve_lp2 :1;	/* never has lp2	*/
@@ -76,6 +78,8 @@ extern const struct machine_desc __arch_info_begin[], __arch_info_end[];
 #define for_each_machine_desc(p)			\
 	for (p = __arch_info_begin; p < __arch_info_end; p++)
 
+extern void set_max_bank_limit(const struct machine_desc *mdesc);
+
 /*
  * Set of macros to define architecture features.  This is built into
  * a table by the linker.
@@ -85,7 +89,8 @@ static const struct machine_desc __mach_desc_##_type	\
  __used							\
  __attribute__((__section__(".arch.info.init"))) = {	\
 	.nr		= MACH_TYPE_##_type,		\
-	.name		= _name,
+	.name		= _name,			\
+	.bank_limit	= 12,
 
 #define MACHINE_END				\
 };
@@ -95,6 +100,7 @@ static const struct machine_desc __mach_desc_##_name	\
  __used							\
  __attribute__((__section__(".arch.info.init"))) = {	\
 	.nr		= ~0,				\
-	.name		= _namestr,
+	.name		= _namestr,			\
+	.bank_limit	= 12,
 
 #endif
