@@ -887,7 +887,7 @@ static int s6e8aa0_power_off(struct s6e8aa0 *ctx)
 	return regulator_bulk_disable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
 }
 
-static int s6e8aa0_disable(struct drm_panel *panel)
+static int s6e8aa0_unprepare(struct drm_panel *panel)
 {
 	struct s6e8aa0 *ctx = panel_to_s6e8aa0(panel);
 
@@ -900,7 +900,12 @@ static int s6e8aa0_disable(struct drm_panel *panel)
 	return s6e8aa0_power_off(ctx);
 }
 
-static int s6e8aa0_enable(struct drm_panel *panel)
+static int s6e8aa0_disable(struct drm_panel *panel)
+{
+	return 0;
+}
+
+static int s6e8aa0_prepare(struct drm_panel *panel)
 {
 	struct s6e8aa0 *ctx = panel_to_s6e8aa0(panel);
 	int ret;
@@ -913,9 +918,14 @@ static int s6e8aa0_enable(struct drm_panel *panel)
 	ret = ctx->error;
 
 	if (ret < 0)
-		s6e8aa0_disable(panel);
+		s6e8aa0_unprepare(panel);
 
 	return ret;
+}
+
+static int s6e8aa0_enable(struct drm_panel *panel)
+{
+	return 0;
 }
 
 static int s6e8aa0_get_modes(struct drm_panel *panel)
@@ -943,7 +953,9 @@ static int s6e8aa0_get_modes(struct drm_panel *panel)
 }
 
 static const struct drm_panel_funcs s6e8aa0_drm_funcs = {
+	.unprepare = s6e8aa0_unprepare,
 	.disable = s6e8aa0_disable,
+	.prepare = s6e8aa0_prepare,
 	.enable = s6e8aa0_enable,
 	.get_modes = s6e8aa0_get_modes,
 };

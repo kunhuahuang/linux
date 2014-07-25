@@ -139,9 +139,11 @@ static void tegra_encoder_dpms(struct drm_encoder *encoder, int mode)
 
 	if (mode != DRM_MODE_DPMS_ON) {
 		drm_panel_disable(panel);
+		drm_panel_unprepare(panel);
 		tegra_output_disable(output);
 	} else {
 		tegra_output_enable(output);
+		drm_panel_prepare(panel);
 		drm_panel_enable(panel);
 	}
 }

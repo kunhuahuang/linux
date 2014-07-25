@@ -214,7 +214,7 @@ static int ld9040_power_off(struct ld9040 *ctx)
 	return regulator_bulk_disable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
 }
 
-static int ld9040_disable(struct drm_panel *panel)
+static int ld9040_unprepare(struct drm_panel *panel)
 {
 	struct ld9040 *ctx = panel_to_ld9040(panel);
 
@@ -228,7 +228,12 @@ static int ld9040_disable(struct drm_panel *panel)
 	return ld9040_power_off(ctx);
 }
 
-static int ld9040_enable(struct drm_panel *panel)
+static int ld9040_disable(struct drm_panel *panel)
+{
+	return 0;
+}
+
+static int ld9040_prepare(struct drm_panel *panel)
 {
 	struct ld9040 *ctx = panel_to_ld9040(panel);
 	int ret;
@@ -242,9 +247,14 @@ static int ld9040_enable(struct drm_panel *panel)
 	ret = ld9040_clear_error(ctx);
 
 	if (ret < 0)
-		ld9040_disable(panel);
+		ld9040_unprepare(panel);
 
 	return ret;
+}
+
+static int ld9040_enable(struct drm_panel *panel)
+{
+	return 0;
 }
 
 static int ld9040_get_modes(struct drm_panel *panel)
@@ -272,7 +282,9 @@ static int ld9040_get_modes(struct drm_panel *panel)
 }
 
 static const struct drm_panel_funcs ld9040_drm_funcs = {
+	.unprepare = ld9040_unprepare,
 	.disable = ld9040_disable,
+	.prepare = ld9040_prepare,
 	.enable = ld9040_enable,
 	.get_modes = ld9040_get_modes,
 };
