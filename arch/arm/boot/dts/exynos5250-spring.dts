@@ -63,7 +63,7 @@
 };
 
 &dp {
-	status = "disabled";
+	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&dp_hpd>;
 	samsung,color-space = <0>;
