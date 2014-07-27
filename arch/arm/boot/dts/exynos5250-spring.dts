@@ -71,6 +71,16 @@
 			clock-frequency = <24000000>;
 		};
 	};
+
+	panel: panel {
+		compatible = "chunghwa,claa101wb01";
+
+		port {
+			panel_in: endpoint {
+				remote-endpoint = <&bridge_out>;
+			};
+		};
+	};
 };
 
 &dp {
@@ -84,6 +94,14 @@
 	samsung,link-rate = <0x0a>;
 	samsung,lane-count = <1>;
 	samsung,hpd-gpio = <&gpc3 0 GPIO_ACTIVE_HIGH>;
+
+	ports {
+		port@0 {
+			dp_out: endpoint {
+				remote-endpoint = <&bridge_in>;
+			};
+		};
+	};
 };
 
 &ehci {
@@ -409,6 +427,30 @@
 	samsung,i2c-sda-delay = <100>;
 	samsung,i2c-max-bus-freq = <66000>;
 
+	ps8622: lvds-bridge@08 {
+		compatible = "parade,ps8622";
+		reg = <0x08>;
+		sleep-gpios = <&gpc3 6 GPIO_ACTIVE_HIGH>;
+		reset-gpios = <&gpc3 1 GPIO_ACTIVE_HIGH>;
+		lane-count = <1>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&ps8622_gpios>;
+
+		ports {
+			port@0 {
+				bridge_out: endpoint {
+					remote-endpoint = <&panel_in>;
+				};
+			};
+
+			port@1 {
+				bridge_in: endpoint {
+					remote-endpoint = <&dp_out>;
+				};
+			};
+		};
+	};
+
 	max98089: codec@10 {
 		compatible = "maxim,max98089", "maxim,max98088";
 		reg = <0x10>;
@@ -475,6 +517,13 @@
 };
 
 &pinctrl_0 {
+	ps8622_gpios: ps8622-gpios {
+		samsung,pins = "gpc3-1", "gpc3-6";
+		samsung,pin-function = <1>;
+		samsung,pin-pud = <0>;
+		samsung,pin-drv = <0>;
+	};
+
 	s5m8767_dvs: s5m8767-dvs {
 		samsung,pins = "gpd1-0", "gpd1-1", "gpd1-2";
 		samsung,pin-function = <0>;
