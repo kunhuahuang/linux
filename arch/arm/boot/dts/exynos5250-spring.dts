@@ -60,6 +60,10 @@
 			clock-frequency = <24000000>;
 		};
 	};
+
+	panel: panel {
+		compatible = "chunghwa,claa101wb01";
+	};
 };
 
 &dp {
@@ -73,6 +77,7 @@
 	samsung,link-rate = <0x0a>;
 	samsung,lane-count = <1>;
 	samsung,hpd-gpio = <&gpc3 0 GPIO_ACTIVE_HIGH>;
+	bridge = <&ps8622>;
 };
 
 &ehci {
@@ -381,6 +386,17 @@
 	status = "okay";
 	samsung,i2c-sda-delay = <100>;
 	samsung,i2c-max-bus-freq = <66000>;
+
+	ps8622: lvds-bridge@08 {
+		compatible = "parade,ps8622";
+		reg = <0x08>;
+		sleep-gpios = <&gpc3 6 GPIO_ACTIVE_HIGH>;
+		reset-gpios = <&gpc3 1 GPIO_ACTIVE_HIGH>;
+		lane-count = <1>;
+		panel = <&panel>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&ps8622_gpios>;
+	};
 };
 
 &i2c_8 {
@@ -444,6 +460,13 @@
 };
 
 &pinctrl_0 {
+	ps8622_gpios: ps8622-gpios {
+		samsung,pins = "gpc3-1", "gpc3-6";
+		samsung,pin-function = <1>;
+		samsung,pin-pud = <0>;
+		samsung,pin-drv = <0>;
+	};
+
 	s5m8767_dvs: s5m8767-dvs {
 		samsung,pins = "gpd1-0", "gpd1-1", "gpd1-2";
 		samsung,pin-function = <0>;
