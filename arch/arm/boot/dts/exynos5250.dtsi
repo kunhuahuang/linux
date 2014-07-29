@@ -224,7 +224,7 @@
 		clock-names = "mfc";
 	};
 
-	rtc@101E0000 {
+	rtc: rtc@101E0000 {
 		clocks = <&clock CLK_RTC>;
 		clock-names = "rtc";
 		status = "disabled";
@@ -238,22 +238,22 @@
 		clock-names = "tmu_apbif";
 	};
 
-	serial@12C00000 {
+	uart0: serial@12C00000 {
 		clocks = <&clock CLK_UART0>, <&clock CLK_SCLK_UART0>;
 		clock-names = "uart", "clk_uart_baud0";
 	};
 
-	serial@12C10000 {
+	uart1: serial@12C10000 {
 		clocks = <&clock CLK_UART1>, <&clock CLK_SCLK_UART1>;
 		clock-names = "uart", "clk_uart_baud0";
 	};
 
-	serial@12C20000 {
+	uart2: serial@12C20000 {
 		clocks = <&clock CLK_UART2>, <&clock CLK_SCLK_UART2>;
 		clock-names = "uart", "clk_uart_baud0";
 	};
 
-	serial@12C30000 {
+	uart3: serial@12C30000 {
 		clocks = <&clock CLK_UART3>, <&clock CLK_SCLK_UART3>;
 		clock-names = "uart", "clk_uart_baud0";
 	};
@@ -570,7 +570,7 @@
 		#phy-cells = <1>;
 	};
 
-	usb@12110000 {
+	ehci: usb@12110000 {
 		compatible = "samsung,exynos4210-ehci";
 		reg = <0x12110000 0x100>;
 		interrupts = <0 71 0>;
@@ -585,7 +585,7 @@
 		};
 	};
 
-	usb@12120000 {
+	ohci: usb@12120000 {
 		compatible = "samsung,exynos4210-ohci";
 		reg = <0x12120000 0x100>;
 		interrupts = <0 71 0>;
@@ -722,7 +722,7 @@
 		clock-names = "gscl";
 	};
 
-	hdmi {
+	hdmi: hdmi {
 		compatible = "samsung,exynos4212-hdmi";
 		reg = <0x14530000 0x70000>;
 		interrupts = <0 95 0>;
@@ -748,14 +748,14 @@
 		#phy-cells = <0>;
 	};
 
-	dp-controller@145B0000 {
+	dp: dp-controller@145B0000 {
 		clocks = <&clock CLK_DP>;
 		clock-names = "dp";
 		phys = <&dp_phy>;
 		phy-names = "dp";
 	};
 
-	fimd@14400000 {
+	fimd: fimd@14400000 {
 		clocks = <&clock CLK_SCLK_FIMD1>, <&clock CLK_FIMD1>;
 		clock-names = "sclk_fimd", "fimd";
 	};
