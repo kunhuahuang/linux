@@ -547,6 +547,13 @@
 };
 
 &pinctrl_0 {
+	dp_hpd: dp_hpd {
+		samsung,pins = "gpx0-7";
+		samsung,pin-function = <3>;
+		samsung,pin-pud = <0>;
+		samsung,pin-drv = <0>;
+	};
+
 	ec_irq: ec-irq {
 		samsung,pins = "gpx1-6";
 		samsung,pin-function = <0>;
