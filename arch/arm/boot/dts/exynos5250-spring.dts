@@ -74,11 +74,12 @@
 
 	panel: panel {
 		compatible = "chunghwa,claa101wb01";
+		status = "disabled";
 	};
 };
 
 &dp {
-	status = "okay";
+	status = "disabled";
 	pinctrl-names = "default";
 	pinctrl-0 = <&dp_hpd_gpio>;
 	samsung,color-space = <0>;
@@ -423,6 +424,7 @@
 		panel = <&panel>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&ps8622_gpios>;
+		status = "disabled";
 	};
 
 	max98089: codec@10 {
