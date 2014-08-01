@@ -215,7 +215,7 @@
 		clock-names = "fimg2d";
 	};
 
-	codec@11000000 {
+	mfc: codec@11000000 {
 		compatible = "samsung,mfc-v6";
 		reg = <0x11000000 0x10000>;
 		interrupts = <0 96 0>;
@@ -258,7 +258,7 @@
 		clock-names = "uart", "clk_uart_baud0";
 	};
 
-	sata@122F0000 {
+	sata: sata@122F0000 {
 		compatible = "snps,dwc-ahci";
 		samsung,sata-freq = <66>;
 		reg = <0x122F0000 0x1ff>;
