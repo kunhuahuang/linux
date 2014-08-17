@@ -400,6 +400,13 @@
 	samsung,i2c-sda-delay = <100>;
 	samsung,i2c-max-bus-freq = <66000>;
 
+	max98089: codec@10 {
+		compatible = "maxim,max98089", "maxim,max98088";
+		reg = <0x10>;
+		clocks = <&pmu_system_controller 0>;
+		clock-names = "mclk";
+	};
+
 	temperature-sensor@4c {
 		compatible = "gmt,g781";
 		reg = <0x4c>;
