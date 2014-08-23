@@ -2,6 +2,7 @@ Audio Binding for Snow boards
 
 Required properties:
 - compatible : Can be one of the following,
+			"google,snow-audio-max98089" or
 			"google,snow-audio-max98090" or
 			"google,snow-audio-max98091" or
 			"google,snow-audio-max98095"
