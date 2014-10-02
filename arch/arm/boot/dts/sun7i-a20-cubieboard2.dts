@@ -91,6 +91,30 @@
 
 				interrupt-controller;
 				#interrupt-cells = <1>;
+
+				regulators {
+					x-powers,dcdc-freq = <1500>;
+
+					vdd_cpu: dcdc2 {
+						vin-supply = <&reg_axp_ipsout>;
+						regulator-always-on;
+					};
+
+					vdd_dll: dcdc3 {
+						vin-supply = <&reg_axp_ipsout>;
+						regulator-always-on;
+					};
+
+					vdd_rtc: ldo1 {
+						vin-supply = <&reg_axp_ipsout>;
+						regulator-always-on;
+					};
+
+					avcc: ldo2 {
+						vin-supply = <&reg_axp_ipsout>;
+						regulator-always-on;
+					};
+				};
 			};
 		};
 
@@ -139,5 +163,13 @@
 
 	reg_usb2_vbus: usb2-vbus {
 		status = "okay";
+	};
+
+	reg_axp_ipsout: axp_ipsout {
+		compatible = "regulator-fixed";
+		regulator-name = "axp-ipsout";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		regulator-always-on;
 	};
 };
