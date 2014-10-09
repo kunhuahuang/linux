@@ -120,6 +120,15 @@
 		reg = <0 0x20000000 0x02 0>;
 	};
 
+	timer {
+		compatible = "arm,armv7-timer";
+		interrupts = <1 13 0xf08>,
+			     <1 14 0xf08>,
+			     <1 11 0xf08>,
+			     <1 10 0xf08>;
+		clock-frequency = <24000000>;
+	};
+
 	clocks {
 		#address-cells = <1>;
 		#size-cells = <1>;
