@@ -280,6 +280,38 @@
 					"apb1_uart2", "apb1_uart3",
 					"apb1_uart4", "apb1_uart5";
 		};
+
+		mmc0_clk: clk@06000410 {
+			#clock-cells = <0>;
+			compatible = "allwinner,sun4i-a10-mod0-clk";
+			reg = <0x06000410 0x4>;
+			clocks = <&osc24M>, <&pll4>;
+			clock-output-names = "mmc0";
+		};
+
+		mmc1_clk: clk@06000414 {
+			#clock-cells = <0>;
+			compatible = "allwinner,sun4i-a10-mod0-clk";
+			reg = <0x06000414 0x4>;
+			clocks = <&osc24M>, <&pll4>;
+			clock-output-names = "mmc1";
+		};
+
+		mmc2_clk: clk@06000418 {
+			#clock-cells = <0>;
+			compatible = "allwinner,sun4i-a10-mod0-clk";
+			reg = <0x06000418 0x4>;
+			clocks = <&osc24M>, <&pll4>;
+			clock-output-names = "mmc2";
+		};
+
+		mmc3_clk: clk@0600041c {
+			#clock-cells = <0>;
+			compatible = "allwinner,sun4i-a10-mod0-clk";
+			reg = <0x0600041c 0x4>;
+			clocks = <&osc24M>, <&pll4>;
+			clock-output-names = "mmc3";
+		};
 	};
 
 	soc {
@@ -291,6 +323,42 @@
 		 * as the peripherals are all under 512MB.
 		 */
 		ranges = <0 0 0 0x20000000>;
+
+		mmc0: mmc@01c0f000 {
+			compatible = "allwinner,sun5i-a13-mmc";
+			reg = <0x01c0f000 0x1000>;
+			clocks = <&ahb0_gates 4>, <&mmc0_clk>;
+			clock-names = "ahb", "mmc";
+			interrupts = <0 60 4>;
+			status = "disabled";
+		};
+
+		mmc1: mmc@01c10000 {
+			compatible = "allwinner,sun5i-a13-mmc";
+			reg = <0x01c10000 0x1000>;
+			clocks = <&ahb0_gates 4>, <&mmc1_clk>;
+			clock-names = "ahb", "mmc";
+			interrupts = <0 61 4>;
+			status = "disabled";
+		};
+
+		mmc2: mmc@01c11000 {
+			compatible = "allwinner,sun5i-a13-mmc";
+			reg = <0x01c11000 0x1000>;
+			clocks = <&ahb0_gates 4>, <&mmc2_clk>;
+			clock-names = "ahb", "mmc";
+			interrupts = <0 62 4>;
+			status = "disabled";
+		};
+
+		mmc3: mmc@01c12000 {
+			compatible = "allwinner,sun5i-a13-mmc";
+			reg = <0x01c12000 0x1000>;
+			clocks = <&ahb0_gates 4>, <&mmc3_clk>;
+			clock-names = "ahb", "mmc";
+			interrupts = <0 63 4>;
+			status = "disabled";
+		};
 
 		gic: interrupt-controller@01c41000 {
 			compatible = "arm,cortex-a7-gic", "arm,cortex-a15-gic";
@@ -361,11 +429,44 @@
 			#size-cells = <0>;
 			#gpio-cells = <3>;
 
+			mmc2_pins_a: mmc2@0 {
+				allwinner,pins = "PC6", "PC7", "PC8",
+				                 "PC9", "PC10", "PC11",
+				                 "PC12", "PC13", "PC14",
+				                 "PC15", "PC16";
+				allwinner,function = "mmc2";
+				allwinner,drive = <0>;
+				allwinner,pull = <0>;
+			};
+
+			mmc0_pins_a: mmc0@0 {
+				allwinner,pins = "PF0", "PF1", "PF2",
+				                 "PF3", "PF4", "PF5";
+				allwinner,function = "mmc0";
+				allwinner,drive = <0>;
+				allwinner,pull = <0>;
+			};
+
+			mmc1_pins_a: mmc1@0 {
+				allwinner,pins = "PG0", "PG1", "PG2",
+				                 "PG3", "PG4", "PG5";
+				allwinner,function = "mmc1";
+				allwinner,drive = <0>;
+				allwinner,pull = <0>;
+			};
+
 			uart0_pins_a: uart0@0 {
 				allwinner,pins = "PH12", "PH13";
 				allwinner,function = "uart0";
 				allwinner,drive = <0>;
 				allwinner,pull = <0>;
+			};
+
+			mmc0_cd_pin: mmc0_cd_pin@0 {
+				allwinner,pins = "PH18";
+				allwinner,function = "irq";
+				allwinner,drive = <0>;
+				allwinner,pull = <1>;
 			};
 		};
 
