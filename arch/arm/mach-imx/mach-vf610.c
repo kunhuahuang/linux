@@ -10,6 +10,7 @@
 #include <linux/of_platform.h>
 #include <linux/irqchip.h>
 #include <asm/mach/arch.h>
+#include <asm/mach-types.h>
 #include <asm/hardware/cache-l2x0.h>
 
 #include "common.h"
@@ -30,5 +31,18 @@ DT_MACHINE_START(VYBRID_VF610, "Freescale Vybrid VF610 (Device Tree)")
 	.l2c_aux_mask	= ~0,
 	.init_machine   = vf610_init_machine,
 	.dt_compat	= vf610_dt_compat,
+	.restart	= mxc_restart,
+MACHINE_END
+
+static const char * const armstonea5_dt_compat[] __initconst = {
+	"f+s,armstone-a5",
+	NULL
+};
+
+MACHINE_START(ARMSTONEA5, "F+S armStoneA5 (Device Tree)")
+	.l2c_aux_val	= 0,
+	.l2c_aux_mask	= ~0,
+	.init_machine	= vf610_init_machine,
+	.dt_compat	= armstonea5_dt_compat,
 	.restart	= mxc_restart,
 MACHINE_END
