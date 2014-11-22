@@ -277,6 +277,62 @@
 		interrupt-controller;
 		#interrupt-cells = <2>;
 	};
+
+	i2c2_bus: i2c2-bus {
+		samsung,pins = "gpa0-6", "gpa0-7";
+		samsung,pin-function = <3>;
+		samsung,pin-pud = <3>;
+		samsung,pin-drv = <0>;
+	};
+
+	i2c3_bus: i2c3-bus {
+		samsung,pins = "gpa1-2", "gpa1-3";
+		samsung,pin-function = <3>;
+		samsung,pin-pud = <3>;
+		samsung,pin-drv = <0>;
+	};
+
+	i2c4_hs_bus: i2c4-hs-bus {
+		samsung,pins = "gpa2-0", "gpa2-1";
+		samsung,pin-function = <3>;
+		samsung,pin-pud = <3>;
+		samsung,pin-drv = <0>;
+	};
+
+	i2c5_hs_bus: i2c5-hs-bus {
+		samsung,pins = "gpa2-2", "gpa2-3";
+		samsung,pin-function = <3>;
+		samsung,pin-pud = <3>;
+		samsung,pin-drv = <0>;
+	};
+
+	i2c6_hs_bus: i2c6-hs-bus {
+		samsung,pins = "gpb1-3", "gpb1-4";
+		samsung,pin-function = <4>;
+		samsung,pin-pud = <3>;
+		samsung,pin-drv = <0>;
+	};
+
+	i2c7_hs_bus: i2c7-hs-bus {
+		samsung,pins = "gpb2-2", "gpb2-3";
+		samsung,pin-function = <3>;
+		samsung,pin-pud = <3>;
+		samsung,pin-drv = <0>;
+	};
+
+	i2c0_bus: i2c0-bus {
+		samsung,pins = "gpb3-0", "gpb3-1";
+		samsung,pin-function = <2>;
+		samsung,pin-pud = <3>;
+		samsung,pin-drv = <0>;
+	};
+
+	i2c1_bus: i2c1-bus {
+		samsung,pins = "gpb3-2", "gpb3-3";
+		samsung,pin-function = <2>;
+		samsung,pin-pud = <3>;
+		samsung,pin-drv = <0>;
+	};
 };
 
 &pinctrl_1 {
