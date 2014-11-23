@@ -38,6 +38,7 @@
 #define SRC_CPERI1		0x4204
 #define DIV_TOP0		0x10510
 #define DIV_TOP1		0x10514
+#define DIV_FSYS0		0x10548
 #define DIV_FSYS1		0x1054c
 #define DIV_FSYS2		0x10550
 #define DIV_PERIC0		0x10558
@@ -49,6 +50,7 @@
 #define SRC_MASK_FSYS		0x10340
 #define SRC_MASK_PERIC0		0x10350
 #define GATE_BUS_FSYS0		0x10740
+#define GATE_TOP_SCLK_FSYS	0x10840
 #define GATE_IP_FSYS		0x10944
 #define GATE_IP_PERIC		0x10950
 #define GATE_IP_PERIS		0x10960
@@ -72,6 +74,7 @@ PNAME(kpll_p)		= { "fin_pll", "fout_kpll", };
 
 PNAME(mout_cpu_p)	= { "mout_apll", "sclk_mpll", };
 PNAME(mout_kfc_p)	= { "mout_kpll", "sclk_mpll", };
+PNAME(mout_usbd3_p)	= { "sclk_mpll_bpll", "fin_pll" };
 
 PNAME(mpll_user_p)	= { "fin_pll", "sclk_mpll", };
 PNAME(bpll_user_p)	= { "fin_pll", "sclk_bpll", };
@@ -102,6 +105,9 @@ static struct samsung_mux_clock exynos5410_mux_clks[] __initdata = {
 	MUX(0, "mout_mmc1", group2_p, SRC_FSYS, 4, 4),
 	MUX(0, "mout_mmc2", group2_p, SRC_FSYS, 8, 4),
 
+	MUX(0, "mout_usbd300", mout_usbd3_p, SRC_FSYS, 28, 1),
+	MUX(0, "mout_usbd301", mout_usbd3_p, SRC_FSYS, 29, 1),
+
 	MUX(0, "mout_uart0", group2_p, SRC_PERIC0, 0, 4),
 	MUX(0, "mout_uart1", group2_p, SRC_PERIC0, 4, 4),
 	MUX(0, "mout_uart2", group2_p, SRC_PERIC0, 8, 4),
@@ -125,6 +131,13 @@ static struct samsung_div_clock exynos5410_div_clks[] __initdata = {
 
 	DIV(0, "aclk66_pre", "sclk_mpll_muxed", DIV_TOP1, 24, 3),
 	DIV(0, "aclk66", "aclk66_pre", DIV_TOP0, 0, 3),
+
+	DIV(CLK_SCLK_USBPHY300, "sclk_usbphy300", "mout_usbd300",
+			DIV_FSYS0, 16, 4),
+	DIV(CLK_SCLK_USBPHY301, "sclk_usbphy301", "mout_usbd301",
+			DIV_FSYS0, 20, 4),
+	DIV(0, "div_usbd300", "mout_usbd300", DIV_FSYS0, 24, 4),
+	DIV(0, "div_usbd301", "mout_usbd301", DIV_FSYS0, 28, 4),
 
 	DIV(0, "div_mmc0", "mout_mmc0", DIV_FSYS1, 0, 4),
 	DIV(0, "div_mmc1", "mout_mmc1", DIV_FSYS1, 16, 4),
@@ -155,6 +168,10 @@ static struct samsung_gate_clock exynos5410_gate_clks[] __initdata = {
 			SRC_MASK_FSYS, 4, CLK_SET_RATE_PARENT, 0),
 	GATE(CLK_SCLK_MMC2, "sclk_mmc2", "div_mmc_pre2",
 			SRC_MASK_FSYS, 8, CLK_SET_RATE_PARENT, 0),
+	GATE(CLK_SCLK_USBD300, "sclk_usbd300", "div_usbd300",
+			GATE_TOP_SCLK_FSYS, 9, CLK_SET_RATE_PARENT, 0),
+	GATE(CLK_SCLK_USBD301, "sclk_usbd301", "div_usbd301",
+			GATE_TOP_SCLK_FSYS, 10, CLK_SET_RATE_PARENT, 0),
 
 	GATE(CLK_MMC0, "sdmmc0", "aclk200", GATE_BUS_FSYS0, 12, 0, 0),
 	GATE(CLK_MMC1, "sdmmc1", "aclk200", GATE_BUS_FSYS0, 13, 0, 0),
