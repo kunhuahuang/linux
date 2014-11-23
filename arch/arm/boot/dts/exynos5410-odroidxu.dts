@@ -65,6 +65,13 @@
 			linux,default-trigger = "mmc1";
 		};
 	};
+
+	usb-hub {
+		compatible = "smsc,usb3503a";
+		connect-gpios = <&gpx0 6 GPIO_ACTIVE_LOW>;
+		init-gpios = <&gpx0 7 GPIO_ACTIVE_LOW>;
+		reset-gpios = <&gpx1 4 GPIO_ACTIVE_LOW>;
+	};
 };
 
 &hsi2c_4 {
