@@ -76,6 +76,26 @@
 		compatible = "chunghwa,claa101wb01";
 		status = "disabled";
 	};
+
+	wifi_rst_regulator: wifi-rst-regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "wifi-rst-l";
+		gpio = <&gpx0 2 0>;
+		startup-delay-us = <1500>;
+		enable-active-high;
+		pinctrl-names = "default";
+		pinctrl-0 = <&wifi_rst>;
+	};
+
+	wifi_en_regulator: wifi-en-regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "wifi-en";
+		gpio = <&gpx0 1 0>;
+		vin-supply = <&wifi_rst_regulator>;
+		enable_active_high;
+		pinctrl-names = "default";
+		pinctrl-0 = <&wifi_en>;
+	};
 };
 
 &dp {
@@ -488,6 +508,7 @@
 	pinctrl-0 = <&sd1_clk &sd1_cmd &sd1_cd &sd1_bus4>;
 	bus-width = <4>;
 	cap-mmc-highspeed;
+	vmmc-supply = <&wifi_en_regulator>;
 };
 
 &pinctrl_0 {
@@ -509,6 +530,20 @@
 		samsung,pins = "gpc3-0";
 		samsung,pin-function = <0>;
 		samsung,pin-pud = <3>;
+		samsung,pin-drv = <0>;
+	};
+
+	wifi_en: wifi-en {
+		samsung,pins = "gpx0-1";
+		samsung,pin-function = <1>;
+		samsung,pin-pud = <0>;
+		samsung,pin-drv = <0>;
+	};
+
+	wifi_rst: wifi-rst {
+		samsung,pins = "gpx0-2";
+		samsung,pin-function = <1>;
+		samsung,pin-pud = <0>;
 		samsung,pin-drv = <0>;
 	};
 
