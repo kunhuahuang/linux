@@ -754,6 +754,25 @@ config ARCH_S3C64XX
 	help
 	  Samsung S3C64XX series based systems
 
+config ARCH_STM32
+	bool "ST STM32"
+	depends on !MMU
+	select ARM_NVIC
+	select AUTO_ZRELADDR
+	select CLKSRC_MMIO
+	select CLKSRC_OF
+	select COMMON_CLK
+	select CPU_V7M
+	select GENERIC_CLOCKEVENTS
+	select GENERIC_IRQ_CHIP
+	select NO_DMA
+	select NO_IOPORT_MAP
+	select SOC_BUS
+	select SPARSE_IRQ
+	select USE_OF
+	help
+	  ST STM32 family based systems
+
 config ARCH_DAVINCI
 	bool "TI DaVinci"
 	select ARCH_HAS_HOLES_MEMORYMODEL
