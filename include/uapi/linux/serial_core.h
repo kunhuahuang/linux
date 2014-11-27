@@ -247,4 +247,7 @@
 /* MESON */
 #define PORT_MESON	109
 
+/* STM32 */
+#define PORT_STM32_USART	110
+
 #endif /* _UAPILINUX_SERIAL_CORE_H */

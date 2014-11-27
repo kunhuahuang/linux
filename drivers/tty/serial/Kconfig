@@ -1473,6 +1473,19 @@ config SERIAL_EFM32_UART_CONSOLE
 	depends on SERIAL_EFM32_UART=y
 	select SERIAL_CORE_CONSOLE
 
+config SERIAL_STM32_USART
+	tristate "STM32 UART/USART port"
+	depends on ARM && (ARCH_STM32 || COMPILE_TEST)
+	select SERIAL_CORE
+	help
+	  This driver support the USART and UART ports on
+	  ST's STM32 SoCs.
+
+config SERIAL_STM32_USART_CONSOLE
+	bool "STM32 UART/USART console support"
+	depends on SERIAL_STM32_USART=y
+	select SERIAL_CORE_CONSOLE
+
 config SERIAL_TILEGX
 	tristate "TILE-Gx on-chip serial port support"
 	depends on TILEGX
