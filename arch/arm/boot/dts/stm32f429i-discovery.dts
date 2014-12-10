@@ -16,6 +16,20 @@
 	memory {
 		reg = <0x90000000 0x00800000>;
 	};
+
+	reserved-memory {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		framebuffer: framebuffer@90700000 {
+			reg = <0x90700000 0x00100000>;
+		};
+	};
+};
+
+&ltdc {
+	memory-region = <&framebuffer>;
 };
 
 &usart3 {
