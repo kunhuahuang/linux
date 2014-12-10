@@ -97,6 +97,11 @@
 			status = "disabled";
 		};
 
+		ltdc: dc@40016800 {
+			compatible = "st,stm32f429-ltdc";
+			reg = <0x40016800 0x400>;
+		};
+
 		rcc: clk@40023800 {
 			compatible = "st,stm32f429-rcc";
 			reg = <0x40023800 0x400>;
