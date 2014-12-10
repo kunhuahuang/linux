@@ -10,7 +10,7 @@
 	compatible = "st,stm32f429i-disco";
 
 	chosen {
-		bootargs = "console=ttystm3,115200n8 earlyprintk clk_ignore_unused";
+		bootargs = "console=ttystm3,115200n8 earlyprintk ignore_loglevel debug clk_ignore_unused ihash_entries=64 dhash_entries=64 uclinux.physaddr=0x08120000 root=/dev/mtdblock0 rdinit=/sbin/init"; /* lpj=714752 initcall_debug */
 	};
 
 	memory {
