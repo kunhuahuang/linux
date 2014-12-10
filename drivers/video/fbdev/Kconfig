@@ -2501,3 +2501,13 @@ config FB_SSD1307
 	help
 	  This driver implements support for the Solomon SSD1307
 	  OLED controller over I2C.
+
+config FB_STM32
+	tristate "ST STM32 framebuffer support"
+	depends on FB
+	select FB_CFB_FILLRECT
+	select FB_CFB_COPYAREA
+	select FB_CFB_IMAGEBLIT
+	help
+	  This driver implements support for the ST STM32 LCD-TFT display
+	  controller.
