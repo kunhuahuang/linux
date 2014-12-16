@@ -18,6 +18,21 @@
 	};
 
 	soc {
+		tim2: timer@40000000 {
+			compatible = "st,stm32f4-timer";
+			reg = <0x40000000 0x400>;
+			interrupts = <28>;
+			clocks = <&rcc CLK_TIM2>;
+		};
+
+		tim5: timer@40000c00 {
+			compatible = "st,stm32f4-timer";
+			reg = <0x40000c00 0x400>;
+			interrupts = <50>;
+			clocks = <&rcc CLK_TIM5>;
+			status = "disabled";
+		};
+
 		usart2: uart@40004400 {
 			compatible = "st,stm32f4-usart";
 			reg = <0x40004400 0x400>;
