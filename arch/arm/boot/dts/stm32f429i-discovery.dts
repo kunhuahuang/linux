@@ -10,10 +10,14 @@
 	compatible = "st,stm32f429i-disco";
 
 	chosen {
-		bootargs = "earlyprintk clk_ignore_unused";
+		bootargs = "console=ttystm3,115200n8 earlyprintk clk_ignore_unused";
 	};
 
 	memory {
 		reg = <0x90000000 0x00800000>;
 	};
+};
+
+&usart3 {
+	status = "okay";
 };
