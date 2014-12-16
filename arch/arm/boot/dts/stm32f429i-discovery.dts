@@ -10,7 +10,7 @@
 	compatible = "st,stm32f429i-disco";
 
 	chosen {
-		bootargs = "earlyprintk";
+		bootargs = "earlyprintk clk_ignore_unused";
 	};
 
 	memory {
