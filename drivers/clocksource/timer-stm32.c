@@ -130,7 +130,6 @@ static void stm32f4_timer_set_mode(enum clock_event_mode mode,
 	struct stm32_clock_event_device *stm_clk = to_stm_clockevent(clk);
 	u32 cr1;
 
-	pr_info("before TIMx CR1 (%pK)\n", stm_clk->regs);
 	cr1 = readl_relaxed(stm_clk->regs + STM32_TIM_CR1);
 	switch (mode) {
 	case CLOCK_EVT_MODE_PERIODIC:
