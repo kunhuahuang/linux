@@ -1,0 +1,10 @@
+/*
+ * Device tree for STM32F429 SoC
+ */
+
+#include "armv7-m.dtsi"
+
+/ {
+	soc {
+	};
+};
