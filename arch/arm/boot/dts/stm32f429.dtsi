@@ -6,5 +6,10 @@
 
 / {
 	soc {
+		rcc: clk@40023800 {
+			compatible = "st,stm32f429-rcc";
+			reg = <0x40023800 0x400>;
+			#clock-cells = <1>;
+		};
 	};
 };
