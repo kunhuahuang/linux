@@ -102,5 +102,11 @@
 			reg = <0x40023800 0x400>;
 			#clock-cells = <1>;
 		};
+
+		systick: timer@e000e010 {
+			compatible = "arm,cortex-m3-systick";
+			reg = <0xe000e010 0x10>;
+			clocks = <&rcc CLK_AHB>;
+		};
 	};
 };
