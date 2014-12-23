@@ -132,4 +132,4 @@ static __init void stm32f42xxx_rcc_init(struct device_node *node)
 		if (!IS_ERR(clk[i]))
 			pr_info("clk %s @ %lu\n", __clk_get_name(clk[i]), __clk_get_rate(clk[i]));
 }
-CLK_OF_DECLARE(stm32f42xxxrcc, "st,stm32f429-rcc" /* XXX -clk */, stm32f42xxx_rcc_init);
+CLK_OF_DECLARE(stm32f42xxxrcc, "st,stm32f429-rcc", stm32f42xxx_rcc_init);
