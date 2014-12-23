@@ -187,12 +187,24 @@ static void rcc_write(unsigned offset, u32 value)
 	writel_relaxed(value, (u8 *)base + offset);
 }
 
+static void rcc_reset(unsigned offset, u32 value)
+{
+	u32 rstr;
+
+	rstr = rcc_read(offset);
+	rstr |= value;
+	rcc_write(offset, rstr);
+	//rstr = rcc_read(offset);
+	rstr &= ~value;
+	rcc_write(offset, rstr);
+}
+
 static __init void stm32f4_timer_init(struct device_node *node)
 {
 	struct clk *clk;
 	void __iomem *base;
 	unsigned long rate;
-	u32 div, dier, apb1rstr;
+	u32 div, dier;
 	int ret, psc_shift;
 
 	clk = of_clk_get(node, 0);
@@ -209,12 +221,7 @@ static __init void stm32f4_timer_init(struct device_node *node)
 	rate = clk_get_rate(clk) * 2;
 
 	/* HACK */
-	apb1rstr = rcc_read(0x20);
-	apb1rstr |= 0x1;
-	rcc_write(0x20, apb1rstr);
-	apb1rstr = rcc_read(0x20);
-	apb1rstr &= ~0x1;
-	rcc_write(0x20, apb1rstr);
+	rcc_reset(0x20, 0x1);
 
 	base = of_iomap(node, 0);
 	if (!base) {
