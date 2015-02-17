@@ -81,6 +81,14 @@
 			};
 		};
 	};
+
+	mmc1_pwrseq: mmc1-pwrseq {
+		compatible = "mmc-pwrseq-simple";
+		reset-gpios = <&gpx0 2 GPIO_ACTIVE_LOW>, /* WIFI_RSTn */
+		              <&gpx0 1 GPIO_ACTIVE_LOW>; /* WIFI_EN */
+		clocks = <&s5m8767_clocks 2>;
+		clock-names = "ext_clock";
+	};
 };
 
 &dp {
@@ -167,7 +175,7 @@
 		                                 <1200000>, <1200000>,
 		                                 <1200000>, <1200000>;
 
-		clocks {
+		s5m8767_clocks: clocks {
 			compatible = "samsung,s5m8767-clk";
 			#clock-cells = <1>;
 			clock-output-names = "en32khz_ap",
@@ -511,9 +519,11 @@
 	samsung,dw-mshc-sdr-timing = <2 3>;
 	samsung,dw-mshc-ddr-timing = <1 2>;
 	pinctrl-names = "default";
-	pinctrl-0 = <&sd1_clk &sd1_cmd &sd1_cd &sd1_bus4>;
+	pinctrl-0 = <&sd1_clk>, <&sd1_cmd>, <&sd1_cd>, <&sd1_bus4>,
+	            <&wifi_en>, <&wifi_rst>;
 	bus-width = <4>;
 	cap-sd-highspeed;
+	mmc-pwrseq = <&mmc1_pwrseq>;
 };
 
 &pinctrl_0 {
@@ -535,6 +545,20 @@
 		samsung,pins = "gpc3-0";
 		samsung,pin-function = <0>;
 		samsung,pin-pud = <3>;
+		samsung,pin-drv = <0>;
+	};
+
+	wifi_en: wifi-en {
+		samsung,pins = "gpx0-1";
+		samsung,pin-function = <1>;
+		samsung,pin-pud = <0>;
+		samsung,pin-drv = <0>;
+	};
+
+	wifi_rst: wifi-rst {
+		samsung,pins = "gpx0-2";
+		samsung,pin-function = <1>;
+		samsung,pin-pud = <0>;
 		samsung,pin-drv = <0>;
 	};
 
