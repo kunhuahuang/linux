@@ -1365,6 +1365,7 @@ static int max98088_dai_set_sysclk(struct snd_soc_dai *dai,
 
        if (!IS_ERR(max98088->mclk)) {
                freq = clk_round_rate(max98088->mclk, freq);
+               dev_warn(codec->dev, "freq = %u\n", freq);
                clk_set_rate(max98088->mclk, freq);
        }
 
