@@ -204,8 +204,6 @@
 		reg = <0x10040000 0x5000>;
 		clock-names = "clkout16";
 		clocks = <&clock CLK_FIN_PLL>;
-		assigned-clocks = <&pmu_system_controller 0>;
-		assigned-clock-parents = <&clock CLK_FIN_PLL>;
 		#clock-cells = <1>;
 		interrupt-controller;
 		#interrupt-cells = <3>;
