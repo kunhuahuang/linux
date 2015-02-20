@@ -421,6 +421,14 @@
 		wakeup-source;
 		pinctrl-names = "default";
 		pinctrl-0 = <&ec_irq>;
+
+		i2c-tunnel {
+			compatible = "google,cros-ec-i2c-tunnel";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			google,remote-bus = <0>;
+			google,limited-passthrough;
+		};
 	};
 };
 
