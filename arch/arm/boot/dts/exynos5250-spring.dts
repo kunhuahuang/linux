@@ -428,6 +428,12 @@
 			#size-cells = <0>;
 			google,remote-bus = <0>;
 			google,limited-passthrough;
+
+			battery: sbs-battery@b {
+				compatible = "sbs,sbs-battery";
+				reg = <0xb>;
+				sbs,poll-retry-count = <1>;
+			};
 		};
 	};
 };
