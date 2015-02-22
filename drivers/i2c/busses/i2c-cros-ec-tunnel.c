@@ -287,6 +287,11 @@ static int ec_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg i2c_msgs[],
 	if (result < 0)
 		return result;
 
+	if (msg.result == EC_RES_INVALID_COMMAND) {
+		result = -EINVAL;
+		goto exit;
+	}
+
 	result = ec_i2c_parse_response(msg.indata, i2c_msgs, &num);
 	if (result < 0)
 		return result;
@@ -345,11 +350,11 @@ static int ec_i2c_probe(struct platform_device *pdev)
 	bus->adap.dev.of_node = np;
 	bus->adap.retries = I2C_MAX_RETRIES;
 
-	if (of_find_property(np, "google,limited-passthrough", NULL)) {
+	if (ec_i2c_xfer(&bus->adap, NULL, 0) == 0) {
+		bus->adap.algo = &ec_i2c_algorithm;
+	} else {
 		bus->adap.algo = &ec_i2c_limited_algorithm;
 		dev_info(dev, "I2C tunnel with limited passthrough\n");
-	} else {
-		bus->adap.algo = &ec_i2c_algorithm;
 	}
 
 	err = i2c_add_adapter(&bus->adap);
