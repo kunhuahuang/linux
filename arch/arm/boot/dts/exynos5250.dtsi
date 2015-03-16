@@ -787,7 +787,6 @@
 	};
 
 	dp: dp-controller@145B0000 {
-		power-domains = <&pd_disp1>;
 		clocks = <&clock CLK_DP>;
 		clock-names = "dp";
 		phys = <&dp_phy>;
